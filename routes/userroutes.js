@@ -77,7 +77,7 @@ routes.post('/login',
 
         res.cookie('token',token);
 
-        res.send('login successful');
+        res.render('home');
     }
 )
 

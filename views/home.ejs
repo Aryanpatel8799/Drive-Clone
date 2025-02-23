@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - File Upload</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500">
+  <form 
+   action="/home"
+   method="post"
+   enctype="multipart/form-data">
+    <div class="w-full  max-w-lg p-8 bg-white rounded-xl shadow-lg">
+    <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Upload Your File</h2>
+    
+    <!-- Drag and Drop Area -->
+    <div id="dropzone" class="flex flex-col items-center justify-center w-full p-6 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer hover:border-blue-500 transition">
+      <p class="text-gray-500">Drag & Drop your file here</p>
+      <input type="file" id="fileInput" class="hidden">
+    </div>
+    
+    <!-- Upload Button -->
+    <button id="uploadBtn" class="w-full px-4 py-3 mt-4 font-semibold text-white transition duration-300 bg-blue-500 rounded-lg hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">Upload File</button>
+  </div>
+</form>
+  <script>
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadBtn = document.getElementById('uploadBtn');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('border-blue-500');
+    });
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('border-blue-500');
+    });
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileInput.files = e.dataTransfer.files;
+      dropzone.classList.remove('border-blue-500');
+    });
+
+    uploadBtn.addEventListener('click', () => {
+      if (fileInput.files.length > 0) {
+        alert(`File Uploaded: ${fileInput.files[0].name}`);
+      } else {
+        alert('Please select a file to upload');
+      }
+    });
+  </script>
+</body>
+</html>
